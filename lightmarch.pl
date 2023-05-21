@@ -1,6 +1,10 @@
-march_to_light_start(StartX, StartY, StartZ, HitLight) :-
+march_to_light_start(StartX, StartY, StartZ, HitLight, BaseColor) :-
     lights(L),
-    light_march_loop(L, StartX, StartY, StartZ, [122.5, 122.5, 122.5], HitLight).
+    BaseColor = [BCB, BCG, BCR],
+    AB is BCB / 2,
+    AG is BCG / 2,
+    AR is BCR / 2,
+    light_march_loop(L, StartX, StartY, StartZ, [AB, AG, AR], HitLight).
 
 march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched, HitLight) :-
     get_closest([CurX, CurY, CurZ], _, Dist, other),

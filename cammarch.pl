@@ -5,7 +5,7 @@ march_cont(CurX, CurY, CurZ, PixColor) :-
              march_reflect_start(Obj, CurX, CurY, CurZ, RefColor),
              PixColor = RefColor,!);
             (color(Obj, [CX, CY, CZ]),
-             march_to_light_start(CurX, CurY, CurZ, HitLight),
+             march_to_light_start(CurX, CurY, CurZ, HitLight, [CX, CY, CZ]),
              HitLight = [LCX, LCY, LCZ],
              (%(AAFlag = 0,
              %  position(camera, [CamX, CamY, CamZ]),

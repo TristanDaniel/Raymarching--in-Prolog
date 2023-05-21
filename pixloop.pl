@@ -8,7 +8,7 @@ write_loop(Stream, [H|T]) :-
 
 pix_loop(640, 360, _, _, _, _):-!.
 pix_loop(CPX, CPY, Stream, CamX, CamY, CamZ) :-
-   (CPX =:= 640 -> (NX = -640, NY is CPY + 1, write(CPY),nl);
+   (CPX =:= 640 -> (NX = -640, NY is CPY + 1, write(CPY), write("c"),nl);
    (march_to_point(CamX, CamY, CamZ, CPX, CPY, 0, PixelColor, 0),
     write_loop(Stream, PixelColor),
     NX is CPX + 1,
@@ -25,7 +25,7 @@ threaded_pix_loop(CPX, CPY, FinalY, CamX, CamY, CamZ) :-
     NX is CPX + 1,
     threaded_pix_loop(NX, CPY, FinalY, CamX, CamY, CamZ),!);
    (CPY < 360,
-   ((CPX > 639, NX = -640, NY is CPY + 2, asserta(generated(CPY)), write(CPY),nl, !);
+   ((CPX > 639, NX = -640, NY is CPY + 3, asserta(generated(CPY)), write(CPY),nl, !);
    (march_to_point(CamX, CamY, CamZ, CPX, CPY, 0, _, 0),
    NX is CPX + 2,
    NY = CPY)),

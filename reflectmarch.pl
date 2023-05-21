@@ -21,9 +21,9 @@ march_reflect_start(Obj, CurX, CurY, CurZ, RefColor) :-
 march_reflect(SX, SY, SZ, CX, CY, CZ, RefColor) :-
     get_closest([CX, CY, CZ], Obj, Dist, other),
     (   (Dist =< 0.1,
-         march_to_light_start(CX, CY, CZ, HitLight),
-         march_to_light_start(SX, SY, SZ, HitLight2),
          color(Obj, [OB, OG, OR]),
+         march_to_light_start(CX, CY, CZ, HitLight, [OB, OG, OR]),
+         march_to_light_start(SX, SY, SZ, HitLight2, [OB, OG, OR]),
          HitLight = [LB, LG, LR],
          HitLight2 = [LB2, LG2, LR2],
          %SB is (OB + LB) // 2,
