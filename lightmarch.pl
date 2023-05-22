@@ -1,9 +1,9 @@
 march_to_light_start(StartX, StartY, StartZ, HitLight, BaseColor) :-
     lights(L),
     BaseColor = [BCB, BCG, BCR],
-    AB is BCB / 2,
-    AG is BCG / 2,
-    AR is BCR / 2,
+    AB is BCB / 4,
+    AG is BCG / 4,
+    AR is BCR / 4,
     light_march_loop(L, StartX, StartY, StartZ, [AB, AG, AR], HitLight).
 
 march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched, HitLight) :-
@@ -13,7 +13,7 @@ march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched
          color(Light, [LB, LG, LR]),
          luminance(Light, Lum),
          DistMarched < Lum,
-         LumRatio is abs(1 - (min((DistMarched * 1),Lum) / Lum)),
+         LumRatio is abs(1 - (DistMarched / Lum)),
          ALB = (LB * LumRatio),
          ALG = (LG * LumRatio),
          ALR = (LR * LumRatio),
@@ -21,7 +21,7 @@ march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched
         ((Dist =< 0.01;
          (luminance(Light, Lum),
            Lum =< DistMarched)),
-         HitLight = [_, _, _]);
+         HitLight = [0, 0, 0]);
         (offset_march(StartX, StartY, StartZ, CurX, CurY, CurZ, MinDist, NewX, NewY, NewZ),
          NewDist is DistMarched + MinDist,
          march_to_light_cont(Light, StartX, StartY, StartZ, NewX, NewY, NewZ, NewDist, HitLight))).

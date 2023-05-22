@@ -46,9 +46,9 @@ march_cont(CurX, CurY, CurZ, PixColor) :-
             %CLX is (CX + LCX) // 2,
             %CLY is (CY + LCY) // 2,
             %CLZ is (CZ + LCZ) // 2,
-            (CLX is round(CX * (LCX / 255)),
-             CLY is round(CY * (LCY / 255)),
-             CLZ is round(CZ * (LCZ / 255)),
+            (CLX is round((CX + LCX) / 2),
+             CLY is round((CY + LCY) / 2),
+             CLZ is round((CZ + LCZ) / 2),
             PixColor = [CLX, CLY, CLZ],
             asserta(pixelcolor([CurX, CurY, CurZ], PixColor)),
              !))))
