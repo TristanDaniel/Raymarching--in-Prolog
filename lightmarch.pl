@@ -1,3 +1,52 @@
+%new light plan:
+%for each point, determine if light is impacting it.
+%for each light source,
+% check if point is too far from light. if so, light is not impacting;
+% if light is within reach (luminance), determine light color and
+% strength;
+% if object is obstrucing light source, light is not impacting.
+%if no light is impacting, make very dark.
+%if light is impacting, then,
+% determine total light impact.
+%  modify light color based on strength, and average.
+% for each wavelength (r/g/b), find proportion out of full 255.
+% multiply wavelength of object color with light strength.
+% add minimum light base to prevent full black and to balance with 0
+% impact areas.
+%  minimum base is "very dark". likely object wavelength / 8.
+
+march_to_light_start(StartX, StartY, StartZ, [BCB, BCG, BCR], FinalColor) :-
+    lights(L),
+    MinB is BCB / 8,
+    MinG is BCG / 8,
+    MinR is BCR / 8,
+    light_loop(L, StartX, StartY, StartZ, 0, [0, 0, 0], LightColor),
+    LightColor = [LCB, LCG, LCR],
+    B is round((BCB * (LCB / 255)) + MinB),
+    G is round((BCG * (LCG / 255)) + MinG),
+    R is round((BCR * (LCR / 255)) + MinR),
+    FinalColor = [B, G, R],!.
+
+light_loop([], _, _, _, 0, _, [0, 0, 0]) :- !.
+light_loop([], _, _, _, Impacted, [TB, TG, TR], LightColor) :-
+    LCB is TB / Impacted,
+    LCG is TG / Impacted,
+    LCR is TR / Impacted,
+    LightColor = [LCB, LCG, LCR], !.
+light_loop([Light|T], StartX, StartY, StartZ, Impacted, TotalLight, LightColor) :-
+    get_pos(Light, StartX, StartY, StartZ, LightX, LightY, LightZ),
+    luminance(Light, Lum),
+    get_dist(StartX, StartY, StartZ, LightX, LightY, LightZ, 0, DL),
+    DistToLight is DL,
+    ((Lum =< DistToLight,
+      light_loop(T, StartX, StartY, StartZ, Impacted, TotalLight, LightColor),!);
+     (!)).
+
+march_to_light(Light, StartX, StartY, StartZ, Impacted, LightColor).
+
+
+
+
 march_to_light_start(StartX, StartY, StartZ, HitLight, BaseColor) :-
     lights(L),
     BaseColor = [BCB, BCG, BCR],
@@ -7,13 +56,13 @@ march_to_light_start(StartX, StartY, StartZ, HitLight, BaseColor) :-
     light_march_loop(L, StartX, StartY, StartZ, [AB, AG, AR], HitLight).
 
 march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched, HitLight) :-
-    get_closest([CurX, CurY, CurZ], _, Dist, other),
+    get_closest([CurX, CurY, CurZ], _, Dist, light),
     closest_with_light(Light, CurX, CurY, CurZ, Dist, MinDist),
     (   (at_light(CurX, CurY, CurZ, Light),
          color(Light, [LB, LG, LR]),
          luminance(Light, Lum),
          DistMarched < Lum,
-         LumRatio is abs(1 - (DistMarched / Lum)),
+         LumRatio is 1 - (DistMarched / Lum),
          ALB = (LB * LumRatio),
          ALG = (LG * LumRatio),
          ALR = (LR * LumRatio),
@@ -27,7 +76,7 @@ march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched
          march_to_light_cont(Light, StartX, StartY, StartZ, NewX, NewY, NewZ, NewDist, HitLight))).
 
 march_to_light(Light, StartX, StartY, StartZ, HitLight) :-
-    position(Light, [LX, LY, LZ]),
+    get_pos(Light, StartX, StartY, StartZ, LX, LY, LZ),
     fake_slope(StartX, StartY, StartZ, LX, LY, LZ, SX, SY, SZ),
     march_to_light_cont(Light, StartX, StartY, StartZ, SX, SY, SZ, 1, HitLight).
 
@@ -38,7 +87,7 @@ light_march_loop([], _, _, _, TempLight, HitLight):-
     %R is floor(HR),
     HitLight = [HB, HG, HR],!.
 light_march_loop([H|T], StartX, StartY, StartZ, TempLight, HitLight) :-
-    position(H, [LX, LY, LZ]),
+    get_pos(H, StartX, StartY, StartZ, LX, LY, LZ),
     luminance(H, Lum),
     get_dist(StartX, StartY, StartZ, LX, LY, LZ, 0, DistToLight),
     DL is DistToLight,
@@ -55,3 +104,17 @@ light_march_loop([H|T], StartX, StartY, StartZ, TempLight, HitLight) :-
       NR = (HLR + TLR) / 2,!);
      (TempLight = [NB, NG, NR])))),
      light_march_loop(T, StartX, StartY, StartZ, [NB, NG, NR], HitLight).
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,7 @@
    consult(reflectmarch).
 
 main :-
-    open("720p9avglight.bmp", write, Stream, [encoding(octet)]),
+    open("720p10ceillight.bmp", write, Stream, [encoding(octet)]),
     write_header(Stream),
     write_pixels(Stream),
     close(Stream),

@@ -17,9 +17,12 @@ elems(fromcamera, List) :-
 elems(other, List) :-
     List = [floor, ceiling, lwall, rwall,
             bwall, fourthwall, sphere1, sphere2, sphere3].
+elems(light, List) :-
+    List = [floor, lwall, rwall,
+            bwall, fourthwall, sphere1, sphere2, sphere3].
 
 lights(List) :-
-    List = [light1, light2].
+    List = [light1, light2, ceiling].
 
 radius(sphere1, 150).
 radius(sphere2, 85).
@@ -33,8 +36,9 @@ radius(fourthwall, 0).
 radius(light1, 0).
 radius(light2, 0).
 
-luminance(light1, 950).
+luminance(light1, 250).
 luminance(light2, 320).
+luminance(ceiling, 400).
 
 color(sphere1, [0, 255, 50]). %B, G, R. Green
 color(sphere2, [255, 100, 0]). %Blue
@@ -48,7 +52,6 @@ color(fourthwall, [219, 182, 0]).
 color(light1, [500, 500, 500]).
 color(light2, [255, 255, 0]).
 
-pixelcolor([-1000,-1000,-1000],[0, 0, 0]).
 :- dynamic pixelcolor/2.
 
 %material(floor, reflective).

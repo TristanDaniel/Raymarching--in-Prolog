@@ -47,12 +47,12 @@ ref_fake_slope(X1, Y1, Z1, X2, Y2, Z2, SX, SY, SZ) :-
     SZ is Z2 + TZ.
 
 at_light(X, Y, Z, Light) :-
-    position(Light, [LX, LY, LZ]),
+    get_pos(Light, X, Y, Z, LX, LY, LZ),
     get_dist(X, Y, Z, LX, LY, LZ, 0, Dist),
     DE is Dist,
-    DE =< 1.
+    DE =< 2.
 
 closest_with_light(Light, X, Y, Z, Dist, MinDist) :-
-    position(Light, [LX, LY, LZ]),
+    get_pos(Light, X, Y, Z, LX, LY, LZ),
     get_dist(X, Y, Z, LX, LY, LZ, 0, LDist),
     min_list([Dist, LDist], MinDist).
