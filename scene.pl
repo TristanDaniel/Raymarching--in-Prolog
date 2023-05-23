@@ -8,7 +8,7 @@ position(fourthwall, [_, _, 0]).
 position(sphere1, [550, -200, 500]).
 position(sphere2, [-65, 50, 100]).
 position(sphere3, [40, -5, 322]).
-position(light1, [30, 80, 2]).
+position(light1, [30, 280, 5]).
 position(light2, [-400, -300, 600]).
 
 elems(fromcamera, List) :-
@@ -36,8 +36,8 @@ radius(fourthwall, 0).
 radius(light1, 0).
 radius(light2, 0).
 
-luminance(light1, 650).
-luminance(light2, 420).
+luminance(light1, 550).
+luminance(light2, 450).
 luminance(ceiling, 200).
 
 color(sphere1, [0, 255, 50]). %B, G, R. Green

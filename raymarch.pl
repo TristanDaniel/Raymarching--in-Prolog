@@ -7,12 +7,13 @@
    consult(reflectmarch).
 
 main :-
-    open("720p13.bmp", write, Stream, [encoding(octet)]),
+    open("720p18.bmp", write, Stream, [encoding(octet)]),
     write_header(Stream),
     write_pixels(Stream),
     close(Stream),
     retractall(pixelcolor(_,_)),
-    retractall(generated(_)).
+    retractall(generated(_)),
+    retractall(generating(_,_)),!.
 
 
 write_header(Stream) :-
@@ -25,9 +26,9 @@ write_pixels(Stream) :-
     position(camera, [CX, CY, CZ]),
     write("Starting threads"),nl,
     %thread_create(threaded_pix_loop(-128, -128, -96, CX, CY, CZ), T1, [detached(false)]),
-    thread_create(threaded_pix_loop(-640, -300, -64, CX, CY, CZ), _, [detached(true)]),
-    thread_create(threaded_pix_loop(-640, -257, -32, CX, CY, CZ), _, [detached(true)]),
-    thread_create(threaded_pix_loop(-640, -157, 0, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -270, -64, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -170, -32, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -127, 0, CX, CY, CZ), _, [detached(true)]),
     thread_create(threaded_pix_loop(-640, -57, 32, CX, CY, CZ), _, [detached(true)]),
     thread_create(threaded_pix_loop(-640, 54, 64, CX, CY, CZ), _, [detached(true)]),
     thread_create(threaded_pix_loop(-640, 154, 96, CX, CY, CZ), _, [detached(true)]),
@@ -72,6 +73,7 @@ startx(-640).
 starty(-360).
 
 :- dynamic generated/1.
+:- dynamic generating/2.
 
 
 
