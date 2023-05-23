@@ -5,8 +5,8 @@ march_cont(CurX, CurY, CurZ, PixColor) :-
              march_reflect_start(Obj, CurX, CurY, CurZ, RefColor),
              PixColor = RefColor,!);
             (color(Obj, [CX, CY, CZ]),
-             march_to_light_start(CurX, CurY, CurZ, HitLight, [CX, CY, CZ]),
-             HitLight = [LCX, LCY, LCZ],
+             march_to_light_start(CurX, CurY, CurZ, [CX, CY, CZ], PixColor),
+             %ActualColor = [LCX, LCY, LCZ],
              (%(AAFlag = 0,
              %  position(camera, [CamX, CamY, CamZ]),
              %  LeftX is CurX - 1,
@@ -46,11 +46,11 @@ march_cont(CurX, CurY, CurZ, PixColor) :-
             %CLX is (CX + LCX) // 2,
             %CLY is (CY + LCY) // 2,
             %CLZ is (CZ + LCZ) // 2,
-            (CLX is round((CX + LCX) / 2),
-             CLY is round((CY + LCY) / 2),
-             CLZ is round((CZ + LCZ) / 2),
-            PixColor = [CLX, CLY, CLZ],
-            asserta(pixelcolor([CurX, CurY, CurZ], PixColor)),
+            (%CLX is round((CX + LCX) / 2),
+             %CLY is round((CY + LCY) / 2),
+             %CLZ is round((CZ + LCZ) / 2),
+            %PixColor = [CLX, CLY, CLZ],
+            %asserta(pixelcolor([CurX, CurY, CurZ], PixColor)),
              !))))
         );
     position(camera, [CameraX, CameraY, CameraZ]),

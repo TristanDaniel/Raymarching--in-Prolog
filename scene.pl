@@ -18,11 +18,11 @@ elems(other, List) :-
     List = [floor, ceiling, lwall, rwall,
             bwall, fourthwall, sphere1, sphere2, sphere3].
 elems(light, List) :-
-    List = [floor, lwall, rwall,
+    List = [floor, ceiling, lwall, rwall,
             bwall, fourthwall, sphere1, sphere2, sphere3].
 
 lights(List) :-
-    List = [light1, light2, ceiling].
+    List = [light1, light2].
 
 radius(sphere1, 150).
 radius(sphere2, 85).
@@ -36,9 +36,9 @@ radius(fourthwall, 0).
 radius(light1, 0).
 radius(light2, 0).
 
-luminance(light1, 250).
-luminance(light2, 320).
-luminance(ceiling, 400).
+luminance(light1, 650).
+luminance(light2, 420).
+luminance(ceiling, 200).
 
 color(sphere1, [0, 255, 50]). %B, G, R. Green
 color(sphere2, [255, 100, 0]). %Blue

@@ -22,17 +22,18 @@ march_reflect(SX, SY, SZ, CX, CY, CZ, RefColor) :-
     get_closest([CX, CY, CZ], Obj, Dist, other),
     (   (Dist =< 0.1,
          color(Obj, [OB, OG, OR]),
-         march_to_light_start(CX, CY, CZ, HitLight, [OB, OG, OR]),
-         march_to_light_start(SX, SY, SZ, HitLight2, [OB, OG, OR]),
-         HitLight = [LB, LG, LR],
-         HitLight2 = [LB2, LG2, LR2],
+         march_to_light_start(CX, CY, CZ, [OB, OG, OR], ObjColor),
+         march_to_light_start(SX, SY, SZ, ObjColor, RefColor),
+         %HitLight = [LB, LG, LR],
+         %HitLight2 = [LB2, LG2, LR2],
          %SB is (OB + LB) // 2,
          %SG is (OG + LG) // 2,
          %SR is (OR + LR) // 2,
-         SB is round(OB * (((LB + LB2) / 2) / 255)),
-         SG is round(OG * (((LG + LG2) / 2) / 255)),
-         SR is round(OR * (((LR + LR2) / 2) / 255)),
-         RefColor = [SB, SG, SR],!);
+         %SB is round(OB * (((LB + LB2) / 2) / 255)),
+         %SG is round(OG * (((LG + LG2) / 2) / 255)),
+         %SR is round(OR * (((LR + LR2) / 2) / 255)),
+         %RefColor = [SB, SG, SR],
+         !);
     (offset_march(SX, SY, SZ, CX, CY, CZ, Dist, NX, NY, NZ),
      march_reflect(SX, SY, SZ, NX, NY, NZ, RefColor))).
 
