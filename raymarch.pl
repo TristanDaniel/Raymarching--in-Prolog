@@ -7,7 +7,7 @@
    consult(reflectmarch).
 
 main :-
-    open("720p18.bmp", write, Stream, [encoding(octet)]),
+    open("720p26.bmp", write, Stream, [encoding(octet)]),
     write_header(Stream),
     write_pixels(Stream),
     close(Stream),
@@ -34,16 +34,16 @@ write_pixels(Stream) :-
     thread_create(threaded_pix_loop(-640, 154, 96, CX, CY, CZ), _, [detached(true)]),
     thread_create(threaded_pix_loop(-640, 254, 96, CX, CY, CZ), _, [detached(true)]),
 
-    %thread_create(threaded_pix_loop(-638, -354, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -351, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -351, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -351, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -351, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -348, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, -348, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, 0, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-638, 0, 96, CX, CY, CZ), _, [detached(true)]),
-    %thread_create(threaded_pix_loop(-640, 0, 128, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -260, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -160, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -137, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -67, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, 0, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, 100, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, 200, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, 300, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -300, 96, CX, CY, CZ), _, [detached(true)]),
+    thread_create(threaded_pix_loop(-640, -200, 128, CX, CY, CZ), _, [detached(true)]),
 
     %thread_join(T1, _),
     write("threads done, making image"),nl,

@@ -28,7 +28,7 @@ march_to_light_start(StartX, StartY, StartZ, [BCB, BCG, BCR], FinalColor) :-
     FinalColor = [B, G, R],!.
 
 light_loop([], _, _, _, 0, _, [0, 0, 0]) :- !.
-light_loop([], _, _, _, Impacted, [TB, TG, TR], LightColor) :-
+light_loop([], _, _, _, _, [TB, TG, TR], LightColor) :-
     LCB is TB,% / Impacted,
     LCG is TG,% / Impacted,
     LCR is TR,% / Impacted,
@@ -63,14 +63,11 @@ march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched
     ((at_light(CurX, CurY, CurZ, Light),
       color(Light, [LB, LG, LR]),
       DistMarched < Lum,
-      ((QL is (3 * Lum) / 5, DistMarched < QL,
-        SkewedDist is -1 * (((2 * Lum * log10((((((DistMarched + (Lum - 0.5)) / Lum) + Lum) ** 2) / (2 * Lum)) - (Lum / 2))) ** 0.5) / 1.5) + Lum,
-
-        LumRatio is (Lum - SkewedDist) / Lum);
-
-
-
-       LumRatio is (Lum - DistMarched) / Lum),
+      LumRatio is (Lum - DistMarched) / Lum,
+      %((QL is (3 * Lum) / 5, DistMarched < QL,
+      %  SkewedDist is -1 * ((2 * Lum * (log10((((((DistMarched + (Lum - 0.5)) / Lum) + Lum) ** 2) / (2 * Lum)) - (Lum / 2))) ** 0.5) / 1.5) + Lum,
+      %  LumRatio is (SkewedDist) / Lum,!);
+      %  LumRatio is (Lum - (DistMarched - (Lum/110))) / Lum,!),
       ALB = (LB * LumRatio),
       ALG = (LG * LumRatio),
       ALR = (LR * LumRatio),

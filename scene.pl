@@ -8,7 +8,7 @@ position(fourthwall, [_, _, 0]).
 position(sphere1, [550, -200, 500]).
 position(sphere2, [-65, 50, 100]).
 position(sphere3, [40, -5, 322]).
-position(light1, [30, 280, 5]).
+position(light1, [30, 180, 10]).
 position(light2, [-400, -300, 600]).
 
 elems(fromcamera, List) :-
@@ -36,7 +36,7 @@ radius(fourthwall, 0).
 radius(light1, 0).
 radius(light2, 0).
 
-luminance(light1, 550).
+luminance(light1, 650).
 luminance(light2, 450).
 luminance(ceiling, 200).
 
@@ -49,7 +49,7 @@ color(lwall, [138, 86, 255]). %Pinkish red
 color(rwall, [138, 86, 255]).
 color(bwall, [0, 182, 239]). %Different purple
 color(fourthwall, [219, 182, 0]).
-color(light1, [500, 500, 500]).
+color(light1, [255, 255, 255]).
 color(light2, [255, 255, 0]).
 
 :- dynamic pixelcolor/2.
