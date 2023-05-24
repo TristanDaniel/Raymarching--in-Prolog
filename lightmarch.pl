@@ -63,11 +63,11 @@ march_to_light_cont(Light, StartX, StartY, StartZ, CurX, CurY, CurZ, DistMarched
     ((at_light(CurX, CurY, CurZ, Light),
       color(Light, [LB, LG, LR]),
       DistMarched < Lum,
-      LumRatio is (Lum - DistMarched) / Lum,
-      %((QL is (3 * Lum) / 5, DistMarched < QL,
-      %  SkewedDist is -1 * ((2 * Lum * (log10((((((DistMarched + (Lum - 0.5)) / Lum) + Lum) ** 2) / (2 * Lum)) - (Lum / 2))) ** 0.5) / 1.5) + Lum,
-      %  LumRatio is (SkewedDist) / Lum,!);
-      %  LumRatio is (Lum - (DistMarched - (Lum/110))) / Lum,!),
+      %LumRatio is (Lum - DistMarched) / Lum,
+      ((QL is (3 * Lum) / 5, DistMarched < QL,
+        SkewedDist is -1 * ((2 * Lum * (log10((((((DistMarched + (Lum - 0.5)) / Lum) + Lum) ** 2) / (2 * Lum)) - (Lum / 2))) ** 0.5) / 1.5) + Lum,
+        LumRatio is (SkewedDist) / Lum,!);
+        LumRatio is (Lum - (DistMarched + 5)) / Lum,!),
       ALB = (LB * LumRatio),
       ALG = (LG * LumRatio),
       ALR = (LR * LumRatio),

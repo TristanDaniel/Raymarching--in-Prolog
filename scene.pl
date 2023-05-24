@@ -8,7 +8,7 @@ position(fourthwall, [_, _, 0]).
 position(sphere1, [550, -200, 500]).
 position(sphere2, [-65, 50, 100]).
 position(sphere3, [40, -5, 322]).
-position(light1, [30, 180, 10]).
+position(light1, [30, 80, 10]).
 position(light2, [-400, -300, 600]).
 
 elems(fromcamera, List) :-
